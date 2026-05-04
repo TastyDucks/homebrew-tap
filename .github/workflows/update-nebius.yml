@@ -1,0 +1,58 @@
+name: Update Nebius CLI
+
+on:
+  schedule:
+    - cron: "0 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  update:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: Homebrew/actions/setup-homebrew@master
+      - name: Tap checkout
+        run: brew tap tastyducks/tap "${GITHUB_WORKSPACE}"
+      - name: Update formula
+        id: update
+        run: |
+          set -euo pipefail
+          version="$(python3 scripts/update_nebius_formula.py)"
+          echo "version=${version}" >> "${GITHUB_OUTPUT}"
+
+          if git diff --quiet -- Formula/nebius.rb; then
+            echo "changed=false" >> "${GITHUB_OUTPUT}"
+          else
+            echo "changed=true" >> "${GITHUB_OUTPUT}"
+          fi
+      - name: Sync formula into tap
+        if: steps.update.outputs.changed == 'true'
+        run: |
+          tap_dir="$(brew --repository tastyducks/tap)"
+          mkdir -p "${tap_dir}/Formula"
+          cp Formula/nebius.rb "${tap_dir}/Formula/nebius.rb"
+      - name: Audit formula
+        if: steps.update.outputs.changed == 'true'
+        run: brew audit --formula tastyducks/tap/nebius
+      - name: Install formula
+        if: steps.update.outputs.changed == 'true'
+        run: brew install tastyducks/tap/nebius
+      - name: Test formula
+        if: steps.update.outputs.changed == 'true'
+        run: brew test tastyducks/tap/nebius
+      - name: Open pull request
+        if: steps.update.outputs.changed == 'true'
+        uses: peter-evans/create-pull-request@v7
+        with:
+          branch: update-nebius-${{ steps.update.outputs.version }}
+          commit-message: Update Nebius CLI to ${{ steps.update.outputs.version }}
+          title: Update Nebius CLI to ${{ steps.update.outputs.version }}
+          body: |
+            Updates the Nebius CLI formula to `${{ steps.update.outputs.version }}`.
+
+            Source: https://docs.nebius.com/cli/release-notes/rss.xml
+          delete-branch: true
