@@ -17,15 +17,15 @@ jobs:
       - uses: actions/checkout@v4
       - uses: Homebrew/actions/setup-homebrew@master
       - name: Tap checkout
-        run: brew tap tastyducks/tap "${GITHUB_WORKSPACE}"
+        run: brew tap local/nebius "${GITHUB_WORKSPACE}"
       - name: Sync formula into tap
         run: |
-          tap_dir="$(brew --repository tastyducks/tap)"
+          tap_dir="$(brew --repository local/nebius)"
           mkdir -p "${tap_dir}/Formula"
           cp Formula/nebius.rb "${tap_dir}/Formula/nebius.rb"
       - name: Audit formula
-        run: brew audit --formula tastyducks/tap/nebius
+        run: brew audit --formula local/nebius/nebius
       - name: Install formula
-        run: brew install tastyducks/tap/nebius
+        run: brew install local/nebius/nebius
       - name: Test formula
-        run: brew test tastyducks/tap/nebius
+        run: brew test local/nebius/nebius

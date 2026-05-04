@@ -16,7 +16,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: Homebrew/actions/setup-homebrew@master
       - name: Tap checkout
-        run: brew tap tastyducks/tap "${GITHUB_WORKSPACE}"
+        run: brew tap local/nebius "${GITHUB_WORKSPACE}"
       - name: Update formula
         id: update
         run: |
@@ -32,18 +32,18 @@ jobs:
       - name: Sync formula into tap
         if: steps.update.outputs.changed == 'true'
         run: |
-          tap_dir="$(brew --repository tastyducks/tap)"
+          tap_dir="$(brew --repository local/nebius)"
           mkdir -p "${tap_dir}/Formula"
           cp Formula/nebius.rb "${tap_dir}/Formula/nebius.rb"
       - name: Audit formula
         if: steps.update.outputs.changed == 'true'
-        run: brew audit --formula tastyducks/tap/nebius
+        run: brew audit --formula local/nebius/nebius
       - name: Install formula
         if: steps.update.outputs.changed == 'true'
-        run: brew install tastyducks/tap/nebius
+        run: brew install local/nebius/nebius
       - name: Test formula
         if: steps.update.outputs.changed == 'true'
-        run: brew test tastyducks/tap/nebius
+        run: brew test local/nebius/nebius
       - name: Open pull request
         if: steps.update.outputs.changed == 'true'
         uses: peter-evans/create-pull-request@v7
