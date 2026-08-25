@@ -5,25 +5,25 @@ class Nebius < Formula
 
   on_macos do
     on_arm do
-      url "https://storage.eu-north1.nebius.cloud/cli/release/0.12.210/darwin/arm64/nebius", using: :nounzip
-      sha256 "f36a4c0cb33917b197733a7ad6c6508efad204f0d6863e80a4b8ce87173f7227"
+      url "https://storage.eu-north1.nebius.cloud/cli/release/0.12.265/darwin/arm64/nebius", using: :nounzip
+      sha256 "7bb0327e8285b1d5afb3fd54fb7fd0ff992df92cb4a35839a05c6ae2024fca51"
     end
 
     on_intel do
-      url "https://storage.eu-north1.nebius.cloud/cli/release/0.12.210/darwin/x86_64/nebius", using: :nounzip
-      sha256 "ffdc6b2107cf12c0fcc1e4a497692f6df589b1e55612f81161344131e34328eb"
+      url "https://storage.eu-north1.nebius.cloud/cli/release/0.12.265/darwin/x86_64/nebius", using: :nounzip
+      sha256 "c96662aa8f882232f939e45f58b217d0264a84af24225170e2da18b7b0bfa6ee"
     end
   end
 
   on_linux do
     on_arm do
-      url "https://storage.eu-north1.nebius.cloud/cli/release/0.12.210/linux/arm64/nebius", using: :nounzip
-      sha256 "3a87713ed0ba465d087786a10252c2b4e833e34223f1586f604266e64da6999f"
+      url "https://storage.eu-north1.nebius.cloud/cli/release/0.12.265/linux/arm64/nebius", using: :nounzip
+      sha256 "11bd157408a9a4ce84cca7fe9314a721840484f3c3f5db0ca7cd2b18549a7b1b"
     end
 
     on_intel do
-      url "https://storage.eu-north1.nebius.cloud/cli/release/0.12.210/linux/x86_64/nebius", using: :nounzip
-      sha256 "091ce6820f49b94c530961f6dfeada2b6871d8e7aedebbfadae5052fe847d797"
+      url "https://storage.eu-north1.nebius.cloud/cli/release/0.12.265/linux/x86_64/nebius", using: :nounzip
+      sha256 "d1590a724ba48dc64180762f3361307b762a9d6e88c5eac6896404688cf48f5e"
     end
   end
 
