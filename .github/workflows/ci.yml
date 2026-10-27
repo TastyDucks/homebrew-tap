@@ -15,7 +15,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
-      - uses: Homebrew/actions/setup-homebrew@master
+      - uses: Homebrew/actions/setup-homebrew@main
       - name: Tap checkout
         run: brew tap local/nebius "${GITHUB_WORKSPACE}"
       - name: Sync formula into tap
